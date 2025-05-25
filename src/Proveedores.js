@@ -134,6 +134,10 @@ function Proveedores() {
           </li>
         ))}
       </ul>
+      {/* Botón para volver a compras */}
+      <button className="volver-button" onClick={() => navigate('/compras')}>
+        ← Volver a Compras
+      </button>
     </div>
   );
 }

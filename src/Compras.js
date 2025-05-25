@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './compras.css';
+import './Compras.css';
 
 const Compras = () => {
   const [fecha, setFecha] = useState('');
@@ -7,14 +7,16 @@ const Compras = () => {
   const [proveedores, setProveedores] = useState([]);
   const [idProducto, setIdProducto] = useState('');
   const [idProveedor, setIdProveedor] = useState('');
+  const [cantidad, setCantidad] = useState(1);
+  const [mensajeExito, setMensajeExito] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/productos/')
+    fetch('http://localhost:8000/par2025/productos/')
       .then(response => response.json())
       .then(data => setProductos(data))
       .catch(error => console.error('Error al cargar productos:', error));
 
-    fetch('http://localhost:8000/api/proveedores/')
+    fetch('http://localhost:8000/par2025/proveedores/')
       .then(response => response.json())
       .then(data => setProveedores(data))
       .catch(error => console.error('Error al cargar proveedores:', error));
@@ -24,18 +26,44 @@ const Compras = () => {
     e.preventDefault();
     const nuevaCompra = {
       fecha,
-      id_producto: idProducto,
-      id_proveedor: idProveedor,
+      producto: idProducto,
+      proveedor: idProveedor,
+      cantidad: parseInt(cantidad),
     };
 
-    console.log('Compra a enviar:', nuevaCompra);
-    // Aquí se puede enviar la compra con fetch si ya está la API funcionando
+    fetch('http://localhost:8000/par2025/compras/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(nuevaCompra),
+    })
+      .then(response => {
+        if (response.ok) {
+          setMensajeExito('✅ Compra registrada correctamente.');
+          setFecha('');
+          setIdProducto('');
+          setIdProveedor('');
+          setCantidad(1);
+        } else {
+          return response.json().then(() => {
+            setMensajeExito('❌ Error al registrar la compra.');
+          });
+        }
+      })
+      .catch(() => setMensajeExito('❌ Error de conexión.'));
   };
+
+  const redirigirAProductos = () => {
+    window.location.href = 'http://localhost:3000/productos';
+  };
+
+  const redirigirAProveedores = () => {
+    window.location.href = 'http://localhost:3000/proveedores';  };
 
   return (
     <div className="compras-container">
       <h2>Registrar Nueva Compra</h2>
-      <form onSubmit={handleSubmit} className="formulario-compras">
+
+      <form onSubmit={handleSubmit} className="compras-form">
         <label>
           Fecha:
           <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
@@ -65,8 +93,26 @@ const Compras = () => {
           </select>
         </label>
 
+        <label>
+          Cantidad:
+          <input
+            type="number"
+            min="1"
+            value={cantidad}
+            onChange={(e) => setCantidad(e.target.value)}
+            required
+          />
+        </label>
+
         <button type="submit">Guardar Compra</button>
       </form>
+
+      <div className="botones-agregar">
+        <button onClick={redirigirAProductos}>➕ Agregar Producto</button>
+        <button onClick={redirigirAProveedores}>➕ Agregar Proveedor</button>
+      </div>
+
+      {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
     </div>
   );
 };

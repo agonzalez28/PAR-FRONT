@@ -1,39 +1,80 @@
 .compras-container {
-  max-width: 500px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  border-radius: 8px;
-  background-color: #f5f5f5;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #f0f8ff; /* celeste claro */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+  font-family: Arial, sans-serif;
 }
 
-h2 {
-  text-align: center;
+.compras-container h2 {
+  color: #0056b3; /* azul oscuro */
   margin-bottom: 1rem;
 }
 
-.formulario-compras label {
-  display: block;
-  margin-bottom: 1rem;
+.compras-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.formulario-compras input,
-.formulario-compras select {
-  width: 100%;
+.compras-form label {
+  font-weight: 600;
+  color: #0056b3;
+  display: flex;
+  flex-direction: column;
+}
+
+.compras-form input,
+.compras-form select {
   padding: 0.5rem;
-  margin-top: 0.3rem;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #000;
 }
 
-button {
-  width: 100%;
+.compras-form button {
   padding: 0.6rem;
-  background-color: #4caf50;
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #45a049;
+.compras-form button:hover {
+  background-color: #0056b3;
+}
+
+.botones-agregar {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.botones-agregar button {
+  padding: 0.5rem 0.8rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.botones-agregar button:hover {
+  background-color: #0056b3;
+}
+
+.mensaje-exito {
+  margin-top: 1.5rem;
+  font-weight: bold;
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 8px;
 }
