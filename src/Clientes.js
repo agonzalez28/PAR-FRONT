@@ -123,6 +123,13 @@ const handleSubmit = (e) => {
           </li>
         ))}
       </ul>
+  <button
+    className="volver-button"
+    style={{ backgroundColor: 'blue', color: 'white', marginTop: '20px' }}
+    onClick={() => navigate('/ventas')}
+  >
+    ← Volver a Ventas
+  </button>
     </div>
   );
 }
