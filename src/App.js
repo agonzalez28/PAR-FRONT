@@ -6,6 +6,7 @@
   import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
   import Productos from './Productos';
   import ReporteInventario from './ReporteInventario';
+import ReporteMovimientos from './ReporteMovimientos';
 
   function App() {
     return (
@@ -22,6 +23,7 @@
             <Route path="/productos/:id" element={<Productos />} />   
             <Route path="/ventas" element={<Ventas />} />              
             <Route path="/reporte-inventario" element={<ReporteInventario />} />
+            <Route path="/reporte-movimientos" element={<ReporteMovimientos />} />
 
           </Routes>
         </main>

@@ -67,3 +67,42 @@
 .volver-button:hover {
   background-color: #0056b3;
 }
+
+/* Botón Generar Reporte */
+.reporte-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  align-self: flex-start; /* para que el botón no tome todo el ancho */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reporte-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.filtro-mes button {
+  margin-left: 1rem; /* separa el botón del input */
+  padding: 0.5rem 1.2rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.filtro-mes button:hover {
+  background-color: #0056b3;
+}
