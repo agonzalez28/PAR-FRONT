@@ -9,6 +9,11 @@ import Productos from './Productos';
 import ReporteInventario from './ReporteInventario';
 import ReporteMovimientos from './ReporteMovimientos';
 import Inicio from './Inicio'; // ✅ Usamos el nuevo componente renombrado
+import ReporteProductosMasVendidos from './ReporteProductosMasVendidos';
+import ReporteTopClientes from './ReporteTopClientes';
+import ReporteTopProveedores from './ReporteTopProveedores';
+import ReporteUtilidades from './ReporteUtilidades';
+
 
 function App() {
   return (
@@ -28,6 +33,10 @@ function App() {
             <Route path="/ventas" element={<Ventas />} />              
             <Route path="/reporte-inventario" element={<ReporteInventario />} />
             <Route path="/reporte-movimientos" element={<ReporteMovimientos />} />
+            <Route path="/reporte-productos-vendidos" element={<ReporteProductosMasVendidos />} />    
+            <Route path="/reporte-top-clientes" element={<ReporteTopClientes />} />   
+            <Route path="/reporte-top-proveedores" element={<ReporteTopProveedores />} /> 
+            <Route path="/reporte-utilidades" element={<ReporteUtilidades />} /> 
           </Routes>
         </main>
       </div>

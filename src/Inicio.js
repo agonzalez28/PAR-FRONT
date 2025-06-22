@@ -1,8 +1,8 @@
 // Inicio.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './App.css'; // Reutilizando tus estilos existentes
-import logo from './logo-facturacion.png'; // si luego querés usar logo
+import './App.css';
+import logo from './logo-facturacion.png';
 
 function Inicio() {
   const navigate = useNavigate();
@@ -10,13 +10,11 @@ function Inicio() {
   return (
     <div className="compras-container">
       <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-        {
         <img 
           src={logo} 
           alt="Logo del Sistema de Facturación" 
           style={{ width: '120px', marginBottom: '1rem' }} 
         />
-        }
         <h2>Bienvenido al Sistema de Facturación</h2>
         <p style={{ color: '#333', maxWidth: '600px', margin: '0 auto' }}>
           Esta plataforma te permite registrar y gestionar compras y ventas de manera eficiente, 
@@ -37,6 +35,15 @@ function Inicio() {
         </button>
         <button onClick={() => navigate('/reporte-movimientos')}>
           Reporte de Movimientos
+        </button>
+        <button onClick={() => navigate('/reporte-top-clientes')}>
+          Top 15 Clientes
+        </button>
+        <button onClick={() => navigate('/reporte-top-proveedores')}>
+          Top 15 Proveedores
+        </button>
+        <button onClick={() => navigate('/reporte-utilidades')}>
+          Reporte de Utilidades
         </button>
       </div>
     </div>
