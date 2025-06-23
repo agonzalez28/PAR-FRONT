@@ -103,6 +103,20 @@
   transition: background-color 0.3s ease;
 }
 
+.sin-filtro button {
+  margin-left: 1rem; /* separa el botón del input */
+  padding: 0.5rem 1.2rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  margin-top: 1rem;
+}
+
 .filtro-mes button:hover {
   background-color: #0056b3;
 }

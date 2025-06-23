@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './ReporteInventario.css';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 function ReporteTopProveedores() {
   const [mesSeleccionado, setMesSeleccionado] = useState('');
@@ -34,6 +36,45 @@ function ReporteTopProveedores() {
       });
   };
 
+    //Función para exportar PDF
+    const generarPdf = () => {
+      const doc = new jsPDF();
+  
+      const titulo = 'Top 15 Proveedores - Compras Mensuales';
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const textWidth = doc.getTextWidth(titulo);
+      const x = (pageWidth - textWidth) / 2;
+  
+      doc.setFontSize(16);
+      doc.text(titulo, x, 15);
+  
+      doc.setFontSize(12);
+      doc.text(`Mes: ${mesSeleccionado}`, 14, 25);
+  
+      autoTable(doc, {
+        startY: 35,
+        head: [['#', 'Proveedor', 'Total Compras']],
+        body: datos.top_proveedores.map((item, index) => [
+          index + 1,
+          item.nombre_proveedor,
+          `$${item.total_compras.toFixed(2)}`
+        ]),
+        theme: 'grid',
+        headStyles: {
+          fillColor: [200, 200, 200], // Gris claro
+          textColor: 0,               // Texto negro
+          halign: 'center'
+        },
+        styles: {
+          halign: 'center',
+          fontSize: 11,
+          cellPadding: 4
+        }
+      });
+  
+      doc.save(`TopProveedores_${mesSeleccionado}.pdf`);
+    };
+
   return (
     <div className="reporte-inventario-container">
       <h2>Reporte Top 15 Proveedores</h2>
@@ -46,6 +87,7 @@ function ReporteTopProveedores() {
           onChange={e => setMesSeleccionado(e.target.value)}
         />
         <button onClick={obtenerReporte}>Generar Reporte</button>
+        <button onClick={generarPdf}> PDF </button>
       </div>
 
       {loading && <p>Cargando reporte de proveedores...</p>}

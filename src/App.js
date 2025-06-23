@@ -13,6 +13,9 @@ import ReporteProductosMasVendidos from './ReporteProductosMasVendidos';
 import ReporteTopClientes from './ReporteTopClientes';
 import ReporteTopProveedores from './ReporteTopProveedores';
 import ReporteUtilidades from './ReporteUtilidades';
+import ReporteComprasPorFecha from './ReporteComprasPorFecha';
+import ReporteVentasPorFecha from './ReporteVentasPorFecha';
+import Reportes from './Reportes';
 
 
 function App() {
@@ -37,6 +40,9 @@ function App() {
             <Route path="/reporte-top-clientes" element={<ReporteTopClientes />} />   
             <Route path="/reporte-top-proveedores" element={<ReporteTopProveedores />} /> 
             <Route path="/reporte-utilidades" element={<ReporteUtilidades />} /> 
+            <Route path="/reporte-compras-fechas" element={<ReporteComprasPorFecha />} />
+            <Route path="/reporte-ventas-fechas" element={<ReporteVentasPorFecha />} />
+            <Route path="/reportes" element={<Reportes />} />
           </Routes>
         </main>
       </div>

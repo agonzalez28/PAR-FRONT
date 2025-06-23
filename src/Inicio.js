@@ -31,12 +31,12 @@ function Inicio() {
           Registrar Venta
         </button>
         <button onClick={() => navigate('/reporte-inventario')}>
-          Reporte de Inventario
+          Inventario
         </button>
         <button onClick={() => navigate('/reporte-movimientos')}>
-          Reporte de Movimientos
+          Movimientos
         </button>
-        <button onClick={() => navigate('/reporte-top-clientes')}>
+      { /* <button onClick={() => navigate('/reporte-top-clientes')}>
           Top 15 Clientes
         </button>
         <button onClick={() => navigate('/reporte-top-proveedores')}>
@@ -45,6 +45,20 @@ function Inicio() {
         <button onClick={() => navigate('/reporte-utilidades')}>
           Reporte de Utilidades
         </button>
+        <button onClick={() => navigate('/reporte-productos-vendidos/')}>
+          Reporte de Productos
+        </button>
+        <button onClick={() => navigate('/reporte-compras-fechas/')}>
+          Reporte de Compras
+        </button>
+        <button onClick={() => navigate('/reporte-ventas-fechas/')}>
+          Reporte de Ventas
+        </button>*/}
+        <button onClick={() => navigate('/reportes/')}>
+          Reportes del Sistema
+        </button>
+
+        
       </div>
     </div>
   );

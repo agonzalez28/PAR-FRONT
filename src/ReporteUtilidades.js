@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './ReporteInventario.css';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 function ReporteUtilidades() {
   const [mesSeleccionado, setMesSeleccionado] = useState('');
@@ -11,7 +13,7 @@ function ReporteUtilidades() {
 
   const obtenerReporte = () => {
     if (!mesSeleccionado) {
-      setError("Seleccioná un mes primero");
+      setError("Debe seleccionar un mes");
       return;
     }
 
@@ -34,6 +36,44 @@ function ReporteUtilidades() {
       });
   };
 
+   // Función para generar el PDF
+   const generarPdf = () => {
+    const doc = new jsPDF();
+
+    const titulo = 'Reporte de Utilidades';
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const textWidth = doc.getTextWidth(titulo);
+    const x = (pageWidth - textWidth) / 2;
+
+    doc.setFontSize(16);
+    doc.text(titulo, x, 15);
+
+    doc.setFontSize(12);
+    doc.text(`Reporte del Mes: ${mesSeleccionado}`, 14, 25);
+
+    autoTable(doc, {
+      startY: 35,
+      head: [['Mes', 'Ventas Totales', 'Costos Totales', 'Utilidad']],
+      body: [[
+        datos.mes,
+        `$${datos.ventas_totales.toFixed(2)}`,
+        `$${datos.costos_totales.toFixed(2)}`,
+        `$${datos.utilidad.toFixed(2)}`
+      ]],
+      theme: 'grid',
+      headStyles: { 
+        fillColor: [200, 200, 200], // Gris claro
+        textColor: 0,              
+        halign: 'center'           
+      },
+      styles: {
+        textColor: datos.utilidad >= 0 ? [39, 174, 96] : [192, 57, 43] // Verde si utilidad positiva, rojo si negativa
+      }
+    });
+    doc.save(`Utilidades_${mesSeleccionado}.pdf`);
+  };
+
+
   return (
     <div className="reporte-inventario-container">
       <h2>Reporte de Utilidades</h2>
@@ -46,6 +86,7 @@ function ReporteUtilidades() {
           onChange={e => setMesSeleccionado(e.target.value)}
         />
         <button onClick={obtenerReporte}>Generar Reporte</button>
+        <button onClick={generarPdf}> PDF </button>
       </div>
 
       {loading && <p>Cargando reporte de utilidades...</p>}

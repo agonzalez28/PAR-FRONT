@@ -1,0 +1,64 @@
+.reportes-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 2rem;
+    background-color: #f0f8ff; /* celeste claro */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+    font-family: Arial, sans-serif;
+  }
+  
+  .reportes-container h2 {
+    color: #0056b3; /* azul oscuro */
+    margin-bottom: 1rem;
+  }
+  
+  .reportes-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .reportes-buttons button {
+    padding: 0.6rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  
+  .reportes-buttons button:hover {
+    background-color: #0056b3;
+  }
+  
+  .reportes-buttons .volver-btn {
+    margin-top: 1rem;
+    background-color: #6c757d; /* gris Bootstrap */
+  }
+  
+  .reportes-buttons .volver-btn:hover {
+    background-color: #5a6268;
+  }
+
+  /* Botón para volver a la pantalla de inicio*/
+.volver-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+    font-weight: bold;
+    z-index: 1000;
+  }
+  
+  .volver-button:hover {
+    background-color: #0056b3;
+  }

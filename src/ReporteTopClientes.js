@@ -1,6 +1,8 @@
 // ReporteTopClientes.js
 import React, { useState } from 'react';
 import './ReporteInventario.css';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 function ReporteTopClientes() {
   const [mesSeleccionado, setMesSeleccionado] = useState('');
@@ -35,6 +37,45 @@ function ReporteTopClientes() {
       });
   };
 
+    // Función para generar el PDF
+    const generarPdf = () => {
+      const doc = new jsPDF();
+  
+      const titulo = 'Top 15 Clientes - Ventas Mensuales';
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const textWidth = doc.getTextWidth(titulo);
+      const x = (pageWidth - textWidth) / 2;
+  
+      doc.setFontSize(16);
+      doc.text(titulo, x, 15);
+  
+      doc.setFontSize(12);
+      doc.text(`Mes: ${mesSeleccionado}`, 14, 25);
+  
+      autoTable(doc, {
+        startY: 35,
+        head: [['#', 'Cliente', 'Total Ventas']],
+        body: datos.top_clientes.map((cliente, index) => [
+          index + 1,
+          cliente.nombre_cliente,
+          `$${cliente.total_ventas.toFixed(2)}`
+        ]),
+        theme: 'grid',
+        headStyles: {
+          fillColor: [200, 200, 200], // Gris claro
+          textColor: 0,               // Letras negras
+          halign: 'center'
+        },
+        styles: {
+          halign: 'center',
+          fontSize: 11,
+          cellPadding: 4
+        },
+      });
+  
+      doc.save(`TopClientes_${mesSeleccionado}.pdf`);
+    };
+
   return (
     <div className="reporte-inventario-container">
       <h2>Reporte Top 15 Clientes - Ventas Mensuales</h2>
@@ -47,6 +88,7 @@ function ReporteTopClientes() {
           onChange={e => setMesSeleccionado(e.target.value)}
         />
         <button onClick={obtenerReporte}>Generar Reporte</button>
+        <button onClick={generarPdf}> PDF </button>
       </div>
 
       {loading && <p>Cargando reporte de clientes...</p>}

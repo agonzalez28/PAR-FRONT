@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import './ReporteInventario.css'; // Reutilizás el mismo CSS si querés
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import './ReporteInventario.css'; // mismo css que el de Inventario
 
 function ReporteMovimientos() {
   const [mesSeleccionado, setMesSeleccionado] = useState('');
@@ -9,9 +11,10 @@ function ReporteMovimientos() {
 
   const API_URL = 'http://localhost:8000/par2025/reporte-mensual/';
 
+  //Para filtrar reporte por mes
   const obtenerReporte = () => {
     if (!mesSeleccionado) {
-      setError("Seleccioná un mes primero");
+      setError("Debe seleccionar un mes");
       return;
     }
 
@@ -30,9 +33,49 @@ function ReporteMovimientos() {
       });
   };
 
+  //Exportar en formato pdf 
+  const generarPdf = () => {
+    const doc = new jsPDF();
+
+     // Título del reporte
+     doc.setFontSize(16);
+     doc.text('Movimientos Mensuales',14, 15);
+ 
+     // Subtítulo con el mes filtrado
+     doc.setFontSize(12);
+     doc.text(`Reporte del mes: ${mesSeleccionado}`, 14, 25);
+ 
+     // Tabla de ventas
+     autoTable(doc, {
+       startY: 35,
+       head: [['Fecha', 'Producto', 'Cliente', 'Cantidad']], // Encabezado
+       body: datos.ventas.map(v => [v.fecha, v.producto, v.cliente, v.cantidad]), // Filas
+       theme: 'grid',
+      headStyles: { fillColor: [52, 152, 219] }, // Azul
+     });
+ 
+     let y = doc.lastAutoTable.finalY + 10;
+     doc.text(`Total Ventas: ${datos.total_ventas}`, 14, y);
+ 
+     // Tabla de las compras
+     y += 10;
+     autoTable(doc, {
+       startY: y,
+       head: [['Fecha', 'Producto', 'Cantidad']],
+       body: datos.compras.map(c => [c.fecha, c.producto, c.cantidad]),
+       theme: 'grid',
+       headStyles: { fillColor: [46, 204, 113],}
+  });
+ 
+     y = doc.lastAutoTable.finalY + 10;
+     doc.text(`Total Compras: ${datos.total_compras}`, 14, y);
+ 
+     // Descarga el pdf
+     doc.save(`Movimientos_${mesSeleccionado}.pdf`);
+   };
   return (
     <div className="reporte-inventario-container">
-      <h2>Reporte de Movimientos Mensuales</h2>
+      <h2> Movimientos Mensuales </h2>
 
       <div className="filtro-mes">
         <label> Filtrar por Mes: </label>
@@ -41,7 +84,8 @@ function ReporteMovimientos() {
             value={mesSeleccionado}
             onChange={e => setMesSeleccionado(e.target.value)}
         />
-        <button onClick={obtenerReporte}>Generar Reporte</button>
+        <button onClick={obtenerReporte}>Búsqueda</button>
+        <button onClick={generarPdf}> PDF </button>
     </div>
 
       {loading && <p>Cargando reporte mensual...</p>}

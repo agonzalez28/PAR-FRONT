@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './ReporteInventario.css'; // Reutilizás el mismo CSS
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 function ReporteProductosMasVendidos() {
   const [mesSeleccionado, setMesSeleccionado] = useState('');
@@ -11,7 +13,7 @@ function ReporteProductosMasVendidos() {
 
   const obtenerReporte = () => {
     if (!mesSeleccionado) {
-      setError("⚠️ Seleccioná un mes válido");
+      setError("Seleccioná un mes válido");
       setProductos([]);
       return;
     }
@@ -26,14 +28,35 @@ function ReporteProductosMasVendidos() {
         setLoading(false);
       })
       .catch(err => {
-        setError("❌ Error al obtener el reporte");
+        setError( "Error al obtener el reporte");
         setLoading(false);
       });
   };
 
+    // Exportar a PDF
+    const generarPdf = () => {
+      const doc = new jsPDF();
+  
+      doc.setFontSize(16);
+      doc.text('Reporte de Productos Más Vendidos', 14, 15);
+  
+      doc.setFontSize(12);
+      doc.text(`Mes: ${mesSeleccionado}`, 14, 25);
+  
+      autoTable(doc, {
+        startY: 35,
+        head: [['Producto', 'Cantidad Vendida']],
+        body: productos.map(item => [item.producto, item.cantidad_total]),
+        theme: 'grid',
+        headStyles: { fillColor: [231, 76, 60] } // rojo
+      });
+  
+      doc.save(`ProductosMasVendidos_${mesSeleccionado}.pdf`);
+    };
+
   return (
     <div className="reporte-inventario-container">
-      <h2>Reporte: Productos Más Vendidos</h2>
+      <h2>Productos Más Vendidos</h2>
 
       <div className="filtro-mes">
         <label>Filtrar por Mes:</label>
@@ -42,7 +65,8 @@ function ReporteProductosMasVendidos() {
           value={mesSeleccionado}
           onChange={e => setMesSeleccionado(e.target.value)}
         />
-        <button onClick={obtenerReporte}>Generar Reporte</button>
+        <button onClick={obtenerReporte}>Búsqueda</button>
+        <button onClick={generarPdf}> PDF </button>
       </div>
 
       {loading && <p>Cargando reporte...</p>}
@@ -69,6 +93,12 @@ function ReporteProductosMasVendidos() {
           </table>
         </div>
       )}
+       {/* Mostrar mensaje si no hay productos */}
+    {!loading && productos.length === 0 && mesSeleccionado && (
+      <p style={{ color: '#888', marginTop: '1rem' }}>
+        No se encontraron productos vendidos en el mes seleccionado.
+      </p>
+    )}
     </div>
   );
 }
